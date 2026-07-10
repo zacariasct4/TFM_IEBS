@@ -1,0 +1,73 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+conda-env/
+
+# Variables de entorno y credenciales
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Sistemas operativos
+.DS_Store
+Thumbs.db
+
+# Logs y archivos temporales
+*.log
+*.tmp
+temp/
+tmp/
+
+# Modelos y artefactos pesados
+models/*.pkl
+models/*.joblib
+models/*.h5
+models/*.keras
+models/*.pt
+models/*.pth
+artifacts/
+
+# Datos originales, intermedios y procesados
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+
+# Mantener las carpetas aunque estén vacías
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+
+# Spark
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Bases de datos locales
+*.db
+*.sqlite
+*.sqlite3
+
+# Cobertura y builds
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
