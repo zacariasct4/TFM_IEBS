@@ -1,0 +1,4 @@
+file_name,file_path,folder,n_rows,n_columns,columns,n_missing_total,missing_percentage
+altura_min_sevilla.xlsx,..\data\raw\altura_min_sevilla.xlsx,raw,525601,7,"['Fecha', 'Año', 'Mes', 'Dia', 'Hora', 'Min', 'altura']",2,5.435953997695699e-05
+datos_2023.xlsx,..\data\raw\datos_2023.xlsx,raw,525600,16,"['Ano', 'Mes', 'Dia', 'Hora', 'Minuto', 'Fecha', 'GHI', 'DNI', 'DHI', 'Temperatura [°C]', 'Velocidad del viento [m/s]', 'Direccion del viento [º]', 'Humedad Relativa [%]', 'Codigo GHI', 'Codigo DNI', 'Codigo dHI']",87769,1.0436762747336377
+datos_2024.xlsx,..\data\raw\datos_2024.xlsx,raw,527040,15,"['Mes', 'Dia', 'Hora', 'Minuto', 'Fecha', 'GHI', 'DNI', 'DHI', 'Temperatura [°C]', 'Velocidad del viento [m/s]', 'Direccion del viento [º]', 'Humedad Relativa [%]', 'Codigo GHI', 'Codigo DNI', 'Codigo dHI']",328539,4.155775652701882
