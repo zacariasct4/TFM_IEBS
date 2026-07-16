@@ -475,29 +475,46 @@ codigo_dni
 codigo_dhi
 ```
 
-El notebook deja el `DataFrame` transformado y ordenado en memoria.
+Al finalizar el notebook, el `DataFrame` se reorganiza con las variables temporales, meteorológicas, físicas y de calidad seleccionadas. Posteriormente, el conjunto de datos enriquecido se exporta en formato Parquet para su utilización en las siguientes etapas del proyecto.
 
-**No se realiza ninguna operación de escritura a Parquet, CSV o base de datos dentro de este notebook.**
 
 ---
 
-## Salida del notebook
+## Archivo de salida
 
-El resultado principal es un `DataFrame` enriquecido con las siguientes variables permanentes:
+El notebook genera el siguiente archivo:
 
-- `periodo_solar`
-- `ghi_estimado`
-- `error_balance`
-- `error_balance_abs`
-- `error_balance_rel`
+```text
+../data/processed/dataset_solar_2023_2024_v2.parquet
+```
 
-Estas variables proporcionan información temporal y física que podrá utilizarse posteriormente durante:
+La exportación se realiza mediante:
 
-- La ingeniería de características.
-- La detección de anomalías.
-- La clasificación de la calidad de las irradiancias.
-- La comparación de modelos.
-- La interpretación de predicciones.
+```python
+df.to_parquet(
+    "../data/processed/dataset_solar_2023_2024_v2.parquet",
+    index=False
+)
+```
+
+El parámetro `index=False` evita almacenar el índice interno de pandas como una columna adicional.
+
+El archivo `dataset_solar_2023_2024_v2.parquet` contiene el conjunto de datos consolidado y enriquecido con las siguientes variables generadas durante el análisis:
+
+* `periodo_solar`
+* `ghi_estimado`
+* `error_balance`
+* `error_balance_abs`
+* `error_balance_rel`
+
+Este archivo constituye la segunda versión procesada del dataset y se utilizará como entrada para las siguientes etapas del proyecto:
+
+* Ingeniería de características.
+* Preparación de las etiquetas de clasificación.
+* Detección de anomalías.
+* Entrenamiento y evaluación de modelos.
+* Procesamiento mediante PostgreSQL y PySpark.
+
 
 ---
 
@@ -514,6 +531,15 @@ dataset_solar_2023_2024_v1.parquet
 ```
 
 La ruta relativa presupone que el notebook se ejecuta desde la carpeta `notebooks/` de la estructura del proyecto.
+
+Tras completar correctamente todas las celdas, el notebook guarda el resultado en:
+
+```text
+data/processed/dataset_solar_2023_2024_v2.parquet
+```
+
+La existencia de este archivo debe comprobarse antes de ejecutar los notebooks posteriores que dependan de las variables físicas generadas durante el análisis exploratorio.
+
 
 ---
 
