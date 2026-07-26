@@ -147,6 +147,17 @@ El resultado conserva:
 - los indicadores de trazabilidad `var_meteo_imp` e `irr_null`;
 - las variables objetivo `codigo_ghi`, `codigo_dni` y `codigo_dhi`.
 
+
+## Validación final del dataset
+
+El dataset final contiene **1.052.640 registros y 27 variables**, con un tamaño aproximado en memoria de **206,79 MB**. Las variables temporales, la elevación solar, los indicadores de trazabilidad y los códigos objetivo no presentan valores nulos.
+
+Los nulos restantes se concentran en las variables meteorológicas, con aproximadamente un **8,99 %**, y en las irradiancias y variables derivadas de su balance, con un **1,13 %**. Estos valores se conservan deliberadamente porque corresponden a gaps largos o a mediciones de irradiancia ausentes que no deben reconstruirse antes del modelado.
+
+El indicador `irr_null` identifica **11.868 registros** sin irradiancia, equivalentes al **1,13 %** del dataset. Por su parte, `var_meteo_imp` marca **697 registros meteorológicos imputados**, únicamente el **0,066 %** del total, lo que confirma que la estrategia de imputación aplicada ha sido restrictiva.
+
+La mayor parte de las incidencias se concentra en 2024: este año contiene 10.081 registros con irradiancia nula y 687 registros meteorológicos imputados, frente a 1.787 y 10 registros, respectivamente, en 2023. Esta diferencia deberá considerarse al realizar la partición temporal y evaluar los modelos.
+
 ## Conclusión
 
 La estrategia aplicada prioriza la trazabilidad y la coherencia física frente a la eliminación completa de los valores nulos. Las fuentes externas se descartan como sustitución directa por sus diferencias respecto al dataset original. Las variables meteorológicas se imputan únicamente en gaps cortos mediante métodos adaptados a su comportamiento temporal, mientras que las irradiancias se conservan sin imputar para no alterar la información necesaria para la clasificación de su calidad.
