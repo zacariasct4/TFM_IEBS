@@ -6,7 +6,7 @@ dia,Día del mes correspondiente a la observación.,día,int64,SMALLINT,0,0.0,31
 hora_sin,Transformación seno cíclica de la hora del día.,adimensional,float64,DOUBLE PRECISION,0,0.0,21,False,False,Valor comprendido entre -1 y 1.
 hora_cos,Transformación coseno cíclica de la hora del día.,adimensional,float64,DOUBLE PRECISION,0,0.0,22,False,False,Valor comprendido entre -1 y 1.
 minuto,Minuto dentro de la hora correspondiente a la observación.,minuto,int64,SMALLINT,0,0.0,60,False,False,Valor entero comprendido entre 0 y 59.
-fecha,"Fecha y hora exactas de la observación, con frecuencia temporal de un minuto.",fecha y hora,datetime64[us],TIMESTAMP WITHOUT TIME ZONE,0,0.0,1052640,False,True,Valor obligatorio y único para cada observación.
+fecha,"Fecha y hora exactas de la observación, con frecuencia temporal de un minuto.",fecha y hora,datetime64[us],TIMESTAMP WITHOUT TIME ZONE,0,0.0,1052640,False,True,Valor obligatorio y único dentro de cada versión del dataset. En PostgreSQL forma parte de la clave primaria compuesta junto con dataset_version_id.
 ghi,Irradiancia solar global medida sobre una superficie horizontal.,W/m²,float64,DOUBLE PRECISION,11868,1.1275,38879,True,False,Puede ser nulo cuando la medición original no está disponible. La validación física se realiza en Python.
 dni,Irradiancia solar directa normal medida perpendicularmente a los rayos solares.,W/m²,float64,DOUBLE PRECISION,11868,1.1275,34273,True,False,Puede ser nulo cuando la medición original no está disponible. La validación física se realiza en Python.
 dhi,Irradiancia solar difusa medida sobre una superficie horizontal.,W/m²,float64,DOUBLE PRECISION,11868,1.1275,25892,True,False,Puede ser nulo cuando la medición original no está disponible. La validación física se realiza en Python.
