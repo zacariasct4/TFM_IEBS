@@ -6,71 +6,42 @@ Construir y validar la estructura documental que se utilizará en MongoDB para a
 
 Los registros minuto a minuto se recuperan desde PostgreSQL y se transforman en un único documento diario. En esta fase se trabaja con una fecha de prueba y todavía no se insertan documentos en MongoDB.
 
-## Origen de los datos
+## Arquitectura utilizada
 
-Los datos se recuperan desde:
+El notebook reutiliza funciones definidas en la carpeta `src`:
+
+- `get_database_engine()`: crea la conexión con PostgreSQL.
+- `load_daily_measurements()`: recupera las mediciones correspondientes a una fecha.
+- `build_daily_document()`: transforma los registros del día en un documento compatible con MongoDB.
+
+Esta separación permite mantener los notebooks centrados en la ejecución y validación del proceso, mientras que la lógica reutilizable permanece en módulos Python independientes.
+
+## Extracción del día de prueba
+
+Se utiliza como fecha de prueba:
 
 ```text
-solar.measurements
+2023-07-15
 ```
 
-La conexión con PostgreSQL se realiza mediante SQLAlchemy y las credenciales almacenadas en el archivo `.env`.
+Desde la tabla `solar.measurements` se recuperan 1.440 registros, correspondientes a las mediciones minuto a minuto de un día completo.
 
-Para la fecha seleccionada se obtienen todos los registros ordenados cronológicamente y se comprueba:
+Las comprobaciones iniciales verifican:
 
-- el número de registros;
-- la fecha mínima y máxima;
-- el número de columnas;
-- la existencia de fechas duplicadas.
-
-## Funciones auxiliares
-
-Se crean funciones reutilizables para transformar los datos a una estructura compatible con MongoDB.
-
-### Conversión de tipos
-
-Los valores de NumPy y pandas se convierten a tipos nativos de Python para evitar incompatibilidades durante la serialización BSON.
-
-### Resumen numérico
-
-Para las variables continuas se calculan:
-
-- media;
-- mediana;
-- mínimo;
-- máximo;
-- desviación estándar;
-- número de valores nulos.
-
-### Distribución categórica
-
-Para los códigos de calidad se calcula:
-
-- frecuencia absoluta de cada categoría;
-- porcentaje diario de cada categoría.
-
-### Resumen de indicadores binarios
-
-Las variables `var_meteo_imp` e `irr_null` se tratan como indicadores binarios.
-
-- `var_meteo_imp = 1` indica que al menos una variable meteorológica del registro fue imputada.
-- `irr_null = 1` indica que el registro presentaba al menos una irradiancia nula antes del tratamiento.
-
-Para cada indicador se almacenan:
-
-- número de valores 0;
-- número de valores 1;
-- número de nulos;
-- porcentaje de registros con valor 1.
+- número de registros;
+- fecha mínima y máxima;
+- número de columnas;
+- ausencia de fechas duplicadas.
 
 ## Estructura del documento diario
 
-Cada documento contiene los siguientes bloques:
+El documento diario incluye los siguientes bloques:
 
 ### Identificación y periodo
 
 - fecha del documento;
 - versión del dataset;
+- origen de los datos;
 - año, mes y día;
 - día de la semana.
 
@@ -84,7 +55,7 @@ Cada documento contiene los siguientes bloques:
 
 ### Irradiancia
 
-Se resumen las variables:
+Se incluyen estadísticas descriptivas de:
 
 - GHI;
 - DNI;
@@ -93,7 +64,7 @@ Se resumen las variables:
 
 ### Meteorología
 
-Se resumen las variables:
+Se resumen:
 
 - temperatura;
 - humedad relativa;
@@ -118,36 +89,33 @@ Se almacena la distribución diaria de:
 
 ### Procesamiento
 
-Se resumen los indicadores:
+Se resumen los indicadores binarios:
 
-- imputación meteorológica;
-- presencia original de irradiancias nulas.
+- `var_meteo_imp`, que señala si al menos una variable meteorológica del registro fue imputada;
+- `irr_null`, que indica si el registro presentaba originalmente alguna irradiancia nula.
 
 ### Estructuras futuras
 
-El documento reserva campos vacíos para incorporar posteriormente:
+El documento reserva campos para incorporar posteriormente:
 
-- rutas de las gráficas diarias;
+- rutas y metadatos de las gráficas diarias;
 - resultados diarios de los modelos;
 - anomalías detectadas;
 - explicaciones automáticas.
-
-Los resultados detallados y las métricas globales de los modelos permanecerán almacenados en PostgreSQL. MongoDB contendrá únicamente su representación diaria, visual y contextual.
 
 ## Validaciones realizadas
 
 El notebook comprueba que:
 
-- el documento representa una única fecha;
-- el número de registros coincide con el DataFrame original;
-- la suma de registros diurnos y nocturnos coincide con el total;
-- las distribuciones de calidad suman el total de registros;
-- los indicadores binarios contienen valores válidos;
-- las frecuencias de los indicadores suman el total diario;
+- el número de registros del documento coincide con el DataFrame original;
+- la suma de registros diurnos y nocturnos coincide con el total diario;
+- el número de fechas duplicadas es correcto;
+- las distribuciones de los códigos de calidad suman el total de registros;
+- los indicadores binarios suman el total diario;
 - el documento puede serializarse correctamente en formato BSON.
 
 ## Resultado
 
-Se ha transformado un día completo de mediciones procedentes de PostgreSQL en un documento de resumen diario compatible con MongoDB.
+Se ha transformado un día completo de mediciones procedentes de PostgreSQL en un documento diario compatible con MongoDB.
 
-La estructura queda preparada para incorporar posteriormente las gráficas, los resultados diarios de los modelos, las anomalías y las explicaciones automáticas. En esta fase todavía no se ha insertado ningún documento en MongoDB.
+El documento queda preparado para incorporar posteriormente las gráficas, los resultados de los modelos, las anomalías y las explicaciones automáticas. En esta fase todavía no se ha insertado ningún documento en MongoDB Atlas.
