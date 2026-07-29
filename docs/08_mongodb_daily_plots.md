@@ -77,7 +77,7 @@ Esta visualización relaciona las condiciones meteorológicas, la calidad de las
 
 ## Actualización del documento diario
 
-Tras generar las imágenes, se actualiza el bloque `graficas` del documento diario con:
+Tras generar las imágenes, se reconstruye el documento diario y se actualiza el bloque `graficas` con:
 
 - disponibilidad del archivo;
 - ruta relativa;
@@ -110,11 +110,13 @@ La validación confirma que el documento actualizado sigue siendo compatible con
 
 ## Resultado
 
-Se han generado dos representaciones gráficas para una fecha de prueba:
+Se han generado y validado dos representaciones gráficas para una fecha de prueba:
 
 - curvas solares diarias;
 - calidad, meteorología e indicadores de procesamiento.
 
 Las imágenes se almacenan como archivos PNG y el documento diario conserva únicamente sus rutas y metadatos.
 
-El documento queda preparado para su posterior inserción en MongoDB Atlas. En esta fase todavía no se han generado las gráficas para todas las fechas ni se ha realizado ninguna inserción en la base de datos.
+Después de incorporar esta información, se ha comprobado que el documento actualizado continúa siendo compatible con BSON y queda preparado para su posterior inserción o actualización en MongoDB mediante una operación `upsert`.
+
+En esta fase únicamente se ha procesado una fecha de prueba. La generación masiva de imágenes y la carga completa de documentos en MongoDB Atlas se realizarán en una fase posterior.

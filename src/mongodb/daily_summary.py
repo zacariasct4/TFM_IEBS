@@ -269,11 +269,6 @@ def build_daily_document(
             "velocidad_viento": numeric_summary(
                 df["velocidad_viento"]
             ),
-            "direccion_viento": numeric_summary(
-                np.degrees(np.arctan2(
-                    df["direccion_viento_sin"], df["direccion_viento_cos"]
-                    )) % 360
-            )
         },
 
         "variables_fisicas": {
