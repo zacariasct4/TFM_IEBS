@@ -23,6 +23,63 @@ BALANCE_FEATURES = [
 
 MISSING_INDICATOR = "irr_null"
 
+def convert_model_dtypes(df):
+
+    df_numeric = df.copy()
+
+    # Variables booleanas -> 0/1
+    bool_columns = df_numeric.select_dtypes(
+        include=["bool"]
+    ).columns.tolist()
+
+    df_numeric[bool_columns] = (
+        df_numeric[bool_columns]
+        .astype("int8")
+    )
+
+    # Variable categórica binaria -> 0/1
+    if "periodo_solar" in df_numeric.columns:
+
+        solar_mapping = {
+            "noche": 0,
+            "dia": 1,
+        }
+
+        unknown_values = set(
+            df_numeric["periodo_solar"]
+            .dropna()
+            .unique()
+        ) - set(solar_mapping)
+
+        if unknown_values:
+            raise ValueError(
+                f"Valores inesperados en periodo_solar: "
+                f"{unknown_values}"
+            )
+
+        df_numeric["periodo_solar"] = (
+            df_numeric["periodo_solar"]
+            .map(solar_mapping)
+            .astype("int8")
+        )
+
+    # Comprobación: no deberían quedar strings/categorías
+    categorical_columns = (
+        df_numeric
+        .select_dtypes(
+            include=["object", "string", "category"]
+        )
+        .columns
+        .tolist()
+    )
+
+    if categorical_columns:
+        raise ValueError(
+            "Quedan variables categóricas sin convertir: "
+            f"{categorical_columns}"
+        )
+
+    return df_numeric
 
 def prepare_model_features(
     train_df,
