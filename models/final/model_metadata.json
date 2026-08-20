@@ -1,0 +1,134 @@
+{
+    "codigo_ghi": {
+        "model": "MLP",
+        "source_model_id": 22,
+        "train_year": 2024,
+        "test_year": 2023,
+        "n_features": 14,
+        "features": [
+            "mes_sin",
+            "mes_cos",
+            "dia",
+            "hora_sin",
+            "hora_cos",
+            "minuto",
+            "ghi",
+            "dni",
+            "dhi",
+            "irr_null",
+            "error_balance_abs",
+            "elevacion_solar",
+            "periodo_solar",
+            "var_meteo_imp"
+        ],
+        "hyperparameters": {
+            "model": "MLP",
+            "hidden_units": [
+                128,
+                64
+            ],
+            "dropout_rate": 0.5,
+            "l2_strength": 0.0001,
+            "learning_rate": 0.0001,
+            "batch_size": 512,
+            "class_weight_mode": "none",
+            "epochs": 6
+        },
+        "model_path": "..\\models\\final\\codigo_ghi_mlp.keras",
+        "scaler_path": "..\\models\\final\\codigo_ghi_scaler.joblib",
+        "metrics_2023": {
+            "f1_macro": 0.8082281604228658,
+            "balanced_accuracy": 0.7724880717357414,
+            "f1_weighted": 0.9241708919137893
+        }
+    },
+    "codigo_dni": {
+        "model": "HistGradientBoostingClassifier",
+        "source_model_id": 20,
+        "train_year": 2024,
+        "test_year": 2023,
+        "n_features": 18,
+        "features": [
+            "mes_sin",
+            "mes_cos",
+            "dia",
+            "hora_sin",
+            "hora_cos",
+            "minuto",
+            "ghi",
+            "dni",
+            "dhi",
+            "error_balance_abs",
+            "elevacion_solar",
+            "periodo_solar",
+            "temperatura",
+            "velocidad_viento",
+            "humedad_relativa",
+            "direccion_viento_sin",
+            "direccion_viento_cos",
+            "var_meteo_imp"
+        ],
+        "hyperparameters": {
+            "model": "HistGradientBoostingClassifier",
+            "learning_rate": 0.08,
+            "max_iter": 500,
+            "max_leaf_nodes": 31,
+            "max_depth": 5,
+            "min_samples_leaf": 40,
+            "l2_regularization": 0.0
+        },
+        "model_path": "..\\models\\final\\codigo_dni_hgb.joblib",
+        "scaler_path": null,
+        "metrics_2023": {
+            "f1_macro": 0.6447535253592788,
+            "balanced_accuracy": 0.635020822413097,
+            "f1_weighted": 0.9847374066626422
+        }
+    },
+    "codigo_dhi": {
+        "model": "HistGradientBoostingClassifier",
+        "source_model_id": 3,
+        "train_year": 2024,
+        "test_year": 2023,
+        "n_features": 21,
+        "features": [
+            "mes_sin",
+            "mes_cos",
+            "dia",
+            "hora_sin",
+            "hora_cos",
+            "minuto",
+            "ghi",
+            "dni",
+            "dhi",
+            "ghi_estimado",
+            "error_balance",
+            "error_balance_abs",
+            "error_balance_rel",
+            "elevacion_solar",
+            "periodo_solar",
+            "temperatura",
+            "velocidad_viento",
+            "humedad_relativa",
+            "direccion_viento_sin",
+            "direccion_viento_cos",
+            "var_meteo_imp"
+        ],
+        "hyperparameters": {
+            "model": "HistGradientBoostingClassifier",
+            "learning_rate": 0.15,
+            "max_iter": 500,
+            "max_leaf_nodes": 63,
+            "max_depth": 5,
+            "min_samples_leaf": 10,
+            "l2_regularization": 0.0
+        },
+        "model_path": "..\\models\\final\\codigo_dhi_hgb.joblib",
+        "scaler_path": null,
+        "metrics_2023": {
+            "f1_macro": 0.5162229349068038,
+            "balanced_accuracy": 0.5308675821606984,
+            "f1_weighted": 0.9026335968016191
+        }
+    }
+}

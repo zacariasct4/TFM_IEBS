@@ -130,8 +130,10 @@ def plot_confusion_matrices(
     fig, axes = plt.subplots(
         1,
         len(targets),
-        figsize=(15, 4)
+        figsize=(5 * len(targets), 4)
     )
+
+    axes = np.atleast_1d(axes)
 
     for ax, target in zip(axes, targets):
 
