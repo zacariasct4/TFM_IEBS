@@ -79,7 +79,7 @@ Archivos originales 2023/2024
 
 ### 3.1. Datos originales
 
-El punto de partida son los datos históricos de irradiancia correspondientes a 2023 y 2024. Durante las primeras fases se inventarían las fuentes, se homogeneizan columnas y fechas, se incorporan variables auxiliares y se analiza la calidad del dato.
+El punto de partida son los datos históricos de irradiancia correspondientes a 2023 y 2024. Durante las primeras fases se analizan las fuentes, se homogeneizan columnas y fechas, se incorporan variables auxiliares y se estudia la calidad del dato.
 
 Los datos pesados no se versionan en Git. Las carpetas locales utilizadas son:
 
