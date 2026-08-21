@@ -10,11 +10,15 @@ from sklearn.metrics import (
     f1_score,
     balanced_accuracy_score,
 )
-
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Input
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.callbacks import EarlyStopping
+
+from src.preprocessing.model_preprocessing import (
+    convert_model_dtypes,
+    prepare_model_features,
+)
 
 class MacroF1Callback(tf.keras.callbacks.Callback):
 
