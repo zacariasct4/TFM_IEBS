@@ -172,7 +172,7 @@ SET
     row_count = EXCLUDED.row_count,
     column_count = EXCLUDED.column_count,
     ready_for_modeling = EXCLUDED.ready_for_modeling,
-    loaded_in_database = EXCLUDED.loaded_in_database;
+    loaded_in_database = solar.dataset_versions.loaded_in_database;
 
 -- Comprobación del registro
 SELECT

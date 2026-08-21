@@ -6,8 +6,13 @@ from sqlalchemy import text
 from src.database.connection import get_database_engine
 
 
-DATASET_PATH = Path(
-    "data/processed/dataset_solar_2023_2024_v3.parquet"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+DATASET_PATH = (
+    PROJECT_ROOT
+    / "data"
+    / "processed"
+    / "dataset_solar_2023_2024_v3.parquet"
 )
 
 VERSION_NAME = "processed_dataset_solar_v3"
@@ -108,7 +113,7 @@ def validate_dataset(df: pd.DataFrame) -> None:
         )
 
 
-def load_measurements() -> None:
+def load_measurements(replace: bool = False) -> None:
     """Cargar la versión v3 en PostgreSQL."""
 
     if not DATASET_PATH.exists():
@@ -138,9 +143,25 @@ def load_measurements() -> None:
         ).scalar_one()
 
         if existing_rows > 0:
-            raise ValueError(
-                f"La versión ya tiene {existing_rows:,} registros "
-                "cargados en solar.measurements."
+            if not replace:
+                raise ValueError(
+                    f"La versión ya tiene {existing_rows:,} registros "
+                    "cargados en solar.measurements."
+                )
+
+            print(
+                f"Eliminando {existing_rows:,} registros existentes "
+                "antes de recargar..."
+            )
+
+            connection.execute(
+                text(
+                    """
+                    DELETE FROM solar.measurements
+                    WHERE dataset_version_id = :dataset_version_id;
+                    """
+                ),
+                {"dataset_version_id": dataset_version_id},
             )
 
         df_to_load = df.copy()
@@ -192,4 +213,4 @@ def load_measurements() -> None:
 
 
 if __name__ == "__main__":
-    load_measurements()
+    load_measurements(replace=False)

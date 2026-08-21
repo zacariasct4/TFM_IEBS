@@ -10,6 +10,7 @@
 -- las versiones de los datasets y almacenar las mediciones
 -- solares minuto a minuto con sus restricciones de integridad.
 -- ============================================================
+CREATE SCHEMA IF NOT EXISTS solar;
 
 CREATE TABLE IF NOT EXISTS solar.dataset_versions (
     dataset_version_id INTEGER GENERATED ALWAYS AS IDENTITY,
@@ -177,7 +178,7 @@ CREATE TABLE IF NOT EXISTS solar.measurements (
 
     CONSTRAINT chk_measurements_codigo_dhi
         CHECK (codigo_dhi IN (0, 1, 2))
-)
+);
 
 -- ============================================================
 -- Asignación de propiedad y permisos al usuario del proyecto

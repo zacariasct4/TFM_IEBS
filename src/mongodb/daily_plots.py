@@ -54,6 +54,8 @@ def generate_solar_curves_plot(
 
     plot_date = df["fecha"].dt.date.iloc[0]
 
+    output_directory.mkdir(parents=True, exist_ok=True)
+
     output_path = (
         output_directory
         / f"{plot_date}_solar_curves.png"
@@ -198,6 +200,8 @@ def generate_quality_weather_plot(
 
     plot_date = df["fecha"].dt.date.iloc[0]
 
+    output_directory.mkdir(parents=True, exist_ok=True)
+    
     output_path = (
         output_directory
         / f"{plot_date}_quality_weather.png"
